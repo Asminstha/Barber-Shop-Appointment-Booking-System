@@ -17,5 +17,9 @@ urlpatterns = [
     path('appointments/<int:pk>/update/', views.appointment_update, name='appointment_update'),
     path('appointments/<int:pk>/delete/', views.appointment_delete, name='appointment_delete'),
 
+    # URL for PDF
+    path('pdf/', views.appointments_pdf, name='appointments_pdf'),
+    path('pdf/<int:pk>/', views.appointment_pdf_single, name='appointment_pdf_single'),
+
 
 ]

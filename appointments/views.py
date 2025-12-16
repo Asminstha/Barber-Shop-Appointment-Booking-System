@@ -5,6 +5,10 @@ from django.contrib import messages
 from .models import Appointment
 from .forms import AppointmentForm
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from django.utils import timezone
 
 # authentication >> sign up view 
 def signup_view(request):
@@ -58,10 +62,17 @@ def landing_page(request):
 
 
 @login_required
+@login_required
 def home_view(request):
-    return render(request, 'appointments/home.html')
+    # Show only the next 3 upcoming appointments
+    upcoming_appointments = Appointment.objects.filter(
+        user=request.user,
+        date__gte=timezone.now().date()
+    ).order_by('date', 'time')[:3]
 
-
+    return render(request, 'appointments/home.html', {
+        'upcoming_appointments': upcoming_appointments
+    })
 
 
 # List all appointments for logged-in user
@@ -126,3 +137,26 @@ def appointment_delete(request, pk):
         messages.success(request, "Appointment deleted successfully!")
         return redirect('appointment_list')
     return render(request, 'appointments/appointment_delete.html', {'appointment': appointment})
+
+
+
+def render_to_pdf(template_src, context_dict={}):
+    template = get_template(template_src)
+    html  = template.render(context_dict)
+    response = HttpResponse(content_type='application/pdf')
+    pisa_status = pisa.CreatePDF(html, dest=response)
+    if pisa_status.err:
+        return HttpResponse("Error generating PDF <pre>" + html + "</pre>")
+    return response
+
+# PDF for all appointments
+def appointments_pdf(request):
+    appointments = Appointment.objects.filter(user=request.user)
+    context = {'appointments': appointments}
+    return render_to_pdf('appointments/appointment_pdf.html', context)
+
+# PDF for single appointment
+def appointment_pdf_single(request, pk):
+    appointment = Appointment.objects.get(pk=pk, user=request.user)
+    context = {'appointment': appointment}
+    return render_to_pdf('appointments/appointment_pdf.html', context)

@@ -3,27 +3,32 @@
 {% block content %}
 <div class="max-w-4xl mx-auto bg-white p-6 rounded shadow mt-4">
     <div class="flex justify-between items-center mb-4">
-        <h2 class="text-2xl font-bold">My Appointments</h2>
-        <a href="{% url 'appointment_create' %}" class="bg-black text-white p-2 rounded hover:bg-gray-800">Book New</a>
+        <h2 class="text-2xl font-bold">📋 My Appointments </h2>
+        <a href="{% url 'appointment_create' %}" class="bg-black text-white p-2 rounded hover:bg-gray-800">➕ Book New </a>
     </div>
     <form method="GET" class="bg-white p-4 rounded shadow mb-4 flex flex-col md:flex-row gap-4">
-    <select name="service" class="border p-2 rounded">
-        <option value="">All Services</option>
-        <option value="Haircut">Haircut</option>
-        <option value="Shave">Shave</option>
-        <option value="Haircut + Shave">Haircut + Shave</option>
-    </select>
+        <select name="service" class="border p-2 rounded">
+            <option value="">All Services</option>
+            <option value="Haircut">Haircut</option>
+            <option value="Shave">Shave</option>
+            <option value="Haircut + Shave">Haircut + Shave</option>
+        </select>
 
-    <input type="date" name="date" class="border p-2 rounded">
+        <input type="date" name="date" class="border p-2 rounded">
 
-    <button type="submit" class="bg-black text-white px-4 py-2 rounded">
-        Filter
-    </button>
+        <button type="submit" class="bg-black text-white px-4 py-2 rounded">
+            Filter
+        </button>
 
-    <a href="{% url 'appointment_list' %}" class="px-4 py-2 border rounded text-center">
-        Reset
-    </a>
-</form>
+        <a href="{% url 'appointment_list' %}" class="px-4 py-2 border rounded text-center">
+            Reset
+        </a>
+    </form>
+    <div class="flex justify-end mb-4 space-x-2">
+        <a href="{% url 'appointments_pdf' %}" class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800">
+            Download All PDF
+        </a>
+    </div>
 
     <table class="w-full table-auto border-collapse border border-gray-300">
         <thead>
@@ -43,8 +48,15 @@
                 <td class="border px-4 py-2">{{ appointment.time }}</td>
                 <td class="border px-4 py-2">{{ appointment.notes }}</td>
                 <td class="border px-4 py-2">
-                    <a href="{% url 'appointment_update' appointment.id %}" class="text-blue-600 hover:underline">Edit</a> |
-                    <a href="{% url 'appointment_delete' appointment.id %}" class="text-red-600 hover:underline">Delete</a>
+                    <a href="{% url 'appointment_update' appointment.id %}"
+                        class="text-blue-600 hover:underline">Edit</a> /
+                    <a href="{% url 'appointment_delete' appointment.id %}"
+                        class="text-red-600 hover:underline">Delete</a> /
+                    <a href="{% url 'appointment_pdf_single' appointment.id %}"
+                        class="bg-gray-800 text-white px-3 py-1 rounded text-sm hover:bg-green-700">
+                        PDF
+                    </a>
+
                 </td>
             </tr>
             {% empty %}
