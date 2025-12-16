@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="text-center py-16">
+    <h1 class="text-4xl md:text-5xl font-bold mb-4">
+        Premium Barber Shop
+    </h1>
+    <p class="text-gray-600 max-w-xl mx-auto mb-6">
+        Professional haircuts, beard styling, and grooming services tailored just for you.
+    </p>
+    <div class="flex justify-center gap-4">
+        <a href="{% url 'login' %}" class="bg-black text-white px-6 py-3 rounded hover:bg-gray-800">
+            Book Appointment
+        </a>
+        <a href="{% url 'signup' %}" class="border border-black px-6 py-3 rounded hover:bg-black hover:text-white">
+            Create Account
+        </a>
+    </div>
+</section>
+
+<section class="grid md:grid-cols-3 gap-6 py-12">
+    <div class="bg-white p-6 rounded shadow text-center">
+        <h3 class="text-xl font-semibold mb-2">Haircut</h3>
+        <p>Modern & classic styles</p>
+    </div>
+    <div class="bg-white p-6 rounded shadow text-center">
+        <h3 class="text-xl font-semibold mb-2">Beard Trim</h3>
+        <p>Sharp and clean grooming</p>
+    </div>
+    <div class="bg-white p-6 rounded shadow text-center">
+        <h3 class="text-xl font-semibold mb-2">Hair + Beard</h3>
+        <p>Complete premium care</p>
+    </div>
+</section>
+
+<section class="bg-black text-white p-10 rounded text-center">
+    <h2 class="text-2xl font-bold mb-2">Why Choose Us?</h2>
+    <p class="max-w-xl mx-auto">
+        Experienced barbers, modern tools, affordable pricing, and easy online booking.
+    </p>
+</section>
+{% endblock %}

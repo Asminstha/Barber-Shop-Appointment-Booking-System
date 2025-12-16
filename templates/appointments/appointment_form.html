@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="min-h-[70vh] flex items-center justify-center bg-gray-50 py-10">
+
+    <div class="w-full max-w-lg bg-white p-8 rounded-xl shadow-lg">
+        <h2 class="text-3xl font-bold text-center mb-6 text-gray-800">
+            {% if form.instance.pk %}Edit Appointment{% else %}Book Appointment{% endif %}
+        </h2>
+
+        <!-- Display non-field errors (like past date/time validation) -->
+        {% if form.non_field_errors %}
+        <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+            {% for error in form.non_field_errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Appointment Form -->
+        <form method="POST" class="space-y-5">
+            {% csrf_token %}
+
+            {% for field in form %}
+            <div class="flex flex-col">
+                <label class="text-sm font-medium mb-1 text-gray-700">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ field.errors|striptags }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            <button type="submit"
+                class="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors">
+                Save Appointment
+            </button>
+        </form>
+
+        <!-- Back link -->
+        <div class="text-center mt-4">
+            <a href="{% url 'appointment_list' %}" class="text-gray-600 hover:underline">
+                ← Back to Appointments
+            </a>
+        </div>
+    </div>
+
+</div>
+
+<!-- Frontend date restriction for extra safety -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const dateInput = document.querySelector('input[type="date"]');
+    if (dateInput) {
+        const today = new Date();
+        today.setDate(today.getDate() + 2); 
+        const minDate = today.toISOString().split('T')[0];
+        dateInput.setAttribute('min', minDate);
+    }
+});
+</script>
+
+{% endblock %}

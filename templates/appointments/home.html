@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="text-center mt-10">
+    <h1 class="text-3xl font-bold mb-4">Welcome, {{ user.username }}!</h1>
+    <p class="mb-4">Book your haircut quickly and easily.</p>
+    <a href="{% url 'appointment_list' %}" class="bg-black text-white p-2 rounded hover:bg-gray-800">My Appointments</a>
+    <a href="{% url 'logout' %}"  class="bg-black text-white p-2 rounded hover:bg-gray-800"> Logout</a>
+</div>
+{% endblock %}
