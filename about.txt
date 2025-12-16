@@ -1,9 +1,0 @@
-admin:
-user
-user123@gmail.com
-user123
-
-
-user:
-asd
-asd123
