@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from django.core.validators import RegexValidator
 
 
+# Appointment form 
 phone_validator = RegexValidator(
     regex=r'^\+?\d{9,15}$',
     message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed."

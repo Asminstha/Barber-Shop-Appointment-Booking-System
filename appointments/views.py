@@ -9,6 +9,9 @@ from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 from django.utils import timezone
+# pagination 
+from django.core.paginator import Paginator
+
 
 # authentication >> sign up view 
 def signup_view(request):
@@ -62,7 +65,6 @@ def landing_page(request):
 
 
 @login_required
-@login_required
 def home_view(request):
     # Show only the next 3 upcoming appointments
     upcoming_appointments = Appointment.objects.filter(
@@ -79,7 +81,6 @@ def home_view(request):
 @login_required
 def appointment_list(request):
     appointments = Appointment.objects.filter(user=request.user)
-
     service = request.GET.get('service')
     date = request.GET.get('date')
 
@@ -89,8 +90,13 @@ def appointment_list(request):
     if date:
         appointments = appointments.filter(date=date)
 
+    # Pagination: Show 5 appointments per page
+    paginator = Paginator(appointments, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     return render(request, 'appointments/appointment_list.html', {
-        'appointments': appointments,
+        'appointments': page_obj,
         'selected_service': service,
         'selected_date': date,
     })

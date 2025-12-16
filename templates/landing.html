@@ -120,17 +120,30 @@
 </section>
 
 <!-- CALL TO ACTION -->
-<section class="bg-black text-white py-20 text-center">
-    <h2 class="text-3xl md:text-4xl font-bold mb-4">
-        Ready for a Fresh Look?
-    </h2>
-    <p class="text-gray-300 mb-8">
-        Book your appointment today and experience premium grooming.
-    </p>
-    <a href="{% url 'login' %}"
-       class="bg-white text-black px-10 py-4 rounded-full font-semibold hover:bg-gray-200 transition">
-        Book Now
-    </a>
+
+{% load static %}
+
+<section class="relative py-24 text-center text-white bg-cover bg-center"
+         style="background-image: url('{% static 'images/barber.jpg' %}');">
+
+    <!-- Dark Overlay -->
+    <div class="absolute inset-0 bg-black/70"></div>
+
+    <!-- Content -->
+    <div class="relative z-10 max-w-3xl mx-auto px-6">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">
+            Ready for a Fresh Look?
+        </h2>
+        <p class="text-gray-300 mb-8">
+            Book your appointment today and experience premium grooming.
+        </p>
+        <a href="{% url 'login' %}"
+           class="inline-block bg-white text-black px-10 py-4 rounded-full font-semibold hover:bg-gray-200 transition">
+            Book Now
+        </a>
+    </div>
+
 </section>
+
 
 {% endblock %}
