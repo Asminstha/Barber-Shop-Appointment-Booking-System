@@ -2,17 +2,31 @@ from django import forms
 from .models import Appointment
 from django.utils import timezone
 from datetime import datetime, timedelta
+from django.core.validators import RegexValidator
 
+
+phone_validator = RegexValidator(
+    regex=r'^\+?\d{9,15}$',
+    message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed."
+)
 class AppointmentForm(forms.ModelForm):
+
+    phone = forms.CharField(validators=[phone_validator], widget=forms.TextInput(attrs={
+        'class': 'w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-black',
+        'placeholder': '+9779876543210'
+    }))
+
+
     class Meta:
         model = Appointment
-        fields = ['customer_name', 'service', 'date', 'time', 'notes']
+        fields = ['customer_name', 'phone', 'service', 'date', 'time', 'notes']
         widgets = {
             'customer_name': forms.TextInput(attrs={
-                'class': 'w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-black'
+                'class': 'w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-black ', 
+                'placeholder':'Enter Customer Name'
             }),
             'service': forms.Select(attrs={
-                'class': 'w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-black'
+                'class': 'w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-black',
             }),
             'date': forms.DateInput(attrs={
                 'type': 'date',
@@ -27,7 +41,8 @@ class AppointmentForm(forms.ModelForm):
             }),
             'notes': forms.Textarea(attrs={
                 'rows': 3,
-                'class': 'w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-black'
+                'class': 'w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-black',
+                'placeholder': 'Enter any Notes'
             }),
         }
 

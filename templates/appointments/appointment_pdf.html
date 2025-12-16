@@ -15,7 +15,8 @@
     <h1>Appointments Report</h1>
 
     {% if appointment %}
-        <p><strong>Customer:</strong> {{ appointment.customer_name }}</p>
+        <p><strong>Customer Name:</strong> {{ appointment.customer_name }}</p>
+        <p><strong>Phone:</strong> {{ appointment.phone }}</p>
         <p><strong>Service:</strong> {{ appointment.service }}</p>
         <p><strong>Date:</strong> {{ appointment.date }}</p>
         <p><strong>Time:</strong> {{ appointment.time }}</p>
@@ -24,7 +25,8 @@
         <table>
             <thead>
                 <tr>
-                    <th>Customer</th>
+                    <th>Customer Name</th>
+                    <th>Phone</th>
                     <th>Service</th>
                     <th>Date</th>
                     <th>Time</th>
@@ -35,6 +37,7 @@
                 {% for app in appointments %}
                 <tr>
                     <td>{{ app.customer_name }}</td>
+                    <td>{{ app.phone }}</td>
                     <td>{{ app.service }}</td>
                     <td>{{ app.date }}</td>
                     <td>{{ app.time }}</td>
